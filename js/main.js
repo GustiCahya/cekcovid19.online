@@ -67,7 +67,6 @@ const app = new Vue({
     },
     getListProvince: function getListProvince(){
       axios.get(`https://services5.arcgis.com/VS6HdKS0VfIhv8Ct/arcgis/rest/services/COVID19_Indonesia_per_Provinsi/FeatureServer/0/query?f=json&where=Provinsi%20%3C%3E%20%27Indonesia%27&returnGeometry=false&outFields=*&orderByFields=Kasus_Terkonfirmasi_Akumulatif%20desc`).then((response)=>{
-
         let arr = []
         for(let i = 0; i < response.data.features.length; i++){
           arr.push({
