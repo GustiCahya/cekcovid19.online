@@ -108,7 +108,7 @@ body {
 .navbar {
   position: relative;
   background-color: var(--color-primary);
-  min-height: 100vh;
+  height: 100%;
   padding: 3rem 6rem;
 }
 
@@ -428,7 +428,7 @@ body {
     position: fixed;
     top: 0;
     left: 0;
-    height: 100vh;
+    height: 100%;
     width: 100%;
     display: block;
     opacity: 0;
