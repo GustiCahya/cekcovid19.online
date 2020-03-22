@@ -71,9 +71,9 @@ const app = new Vue({
         for(let i = 0; i < response.data.features.length; i++){
           arr.push({
             province: response.data.features[i].attributes.Provinsi,
-            confirmed: response.data.features[i].attributes.Kasus_Terkonfirmasi_Akumulatif,
-            recovered: response.data.features[i].attributes.Kasus_Sembuh_Akumulatif,
-            deaths: response.data.features[i].attributes.Kasus_Meninggal_Akumulatif
+            confirmed: response.data.features[i].attributes.Kasus_Posi,
+            recovered: response.data.features[i].attributes.Kasus_Semb,
+            deaths: response.data.features[i].attributes.Kasus_Meni
           })
         }
         this.listProvince = arr
