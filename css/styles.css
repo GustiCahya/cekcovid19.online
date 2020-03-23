@@ -91,10 +91,12 @@ body {
 
 .recovered {
   color: var(--color-success);
+  font-weight: 600;
 }
 
 .death {
   color: var(--color-danger);
+  font-weight: 600;
 }
 
 @media only screen and (max-width: 48em) {
@@ -762,7 +764,7 @@ body {
 }
 
 .daftar-provinsi table thead .people-heading {
-  text-align: center;
+  text-align: right;
 }
 
 .daftar-provinsi table thead th {
@@ -790,13 +792,14 @@ body {
 }
 
 .daftar-provinsi table tbody .people {
-  text-align: center;
+  text-align: right;
 }
 
 .daftar-provinsi table tbody td {
   padding-top: 1rem;
   padding-bottom: 1rem;
   padding-right: 8rem;
+  font-weight: 600;
 }
 
 @media only screen and (max-width: 79.2em) {
@@ -890,7 +893,7 @@ body {
 }
 
 .daftar-negara table thead .people-heading {
-  text-align: center;
+  text-align: right;
 }
 
 .daftar-negara table thead th {
@@ -918,13 +921,14 @@ body {
 }
 
 .daftar-negara table tbody .people {
-  text-align: center;
+  text-align: right;
 }
 
 .daftar-negara table tbody td {
   padding-top: 1rem;
   padding-bottom: 1rem;
   padding-right: 8rem;
+  font-weight: 600;
 }
 
 @media only screen and (max-width: 79.2em) {

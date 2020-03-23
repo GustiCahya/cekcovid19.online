@@ -68,10 +68,12 @@ background: var(--color-tertiary-darken);
     color: #242424
 }
 .recovered{
-    color: var(--color-success)
+    color: var(--color-success);
+    font-weight: 600;
 }
 .death{
-    color: var(--color-danger)
+    color: var(--color-danger);
+    font-weight: 600;
 }
 
 //for mobile navbar
@@ -516,7 +518,7 @@ background: var(--color-tertiary-darken);
             //     width: 10%;
             // }
             .people-heading{
-                text-align: center;
+                text-align: right;
                 // width: 10%;
             }
             th{
@@ -536,13 +538,14 @@ background: var(--color-tertiary-darken);
             height: 3rem;
             overflow-y: auto;
             .people{
-                text-align: center;
+                text-align: right;
                 // width: 10%;
             }
             td{
                 padding-top: 1rem;
                 padding-bottom: 1rem;
                 padding-right: 8rem;
+                font-weight: 600;
                 @media only screen and (max-width: 79.2em){
                    padding-right: 6rem;
                 }
@@ -606,7 +609,7 @@ background: var(--color-tertiary-darken);
             //     width: 10%;
             // }
             .people-heading{
-                text-align: center;
+                text-align: right;
                 // width: 10%;
             }
             th{
@@ -626,13 +629,14 @@ background: var(--color-tertiary-darken);
             height: 3rem;
             overflow-y: auto;
             .people{
-                text-align: center;
+                text-align: right;
                 // width: 10%;
             }
             td{
                 padding-top: 1rem;
                 padding-bottom: 1rem;
                 padding-right: 8rem;
+                font-weight: 600;
                 @media only screen and (max-width: 79.2em){
                    padding-right: 6rem;
                 }
