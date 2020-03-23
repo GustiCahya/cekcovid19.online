@@ -764,7 +764,7 @@ body {
 }
 
 .daftar-provinsi table thead .people-heading {
-  text-align: right;
+  text-align: center;
 }
 
 .daftar-provinsi table thead th {
@@ -792,7 +792,7 @@ body {
 }
 
 .daftar-provinsi table tbody .people {
-  text-align: right;
+  text-align: center;
 }
 
 .daftar-provinsi table tbody td {
@@ -893,7 +893,7 @@ body {
 }
 
 .daftar-negara table thead .people-heading {
-  text-align: right;
+  text-align: center;
 }
 
 .daftar-negara table thead th {
@@ -921,7 +921,7 @@ body {
 }
 
 .daftar-negara table tbody .people {
-  text-align: right;
+  text-align: center;
 }
 
 .daftar-negara table tbody td {
