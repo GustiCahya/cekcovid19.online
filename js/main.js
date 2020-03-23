@@ -52,10 +52,10 @@ const app = new Vue({
     ambilDetail: function ambilDetail() {
 
       axios.get(`https://kawalcovid19.harippe.id/api/summary`).then((response)=>{
-        this.detail.confirmed = response.data.confirmed.value
-        this.detail.active = response.data.activeCare.value
-        this.detail.recovered = response.data.recovered.value
-        this.detail.deaths = response.data.deaths.value
+        this.detail.confirmed = response.data.confirmed.value.toLocaleString().replace(',','.')
+        this.detail.active = response.data.activeCare.value.toLocaleString().replace(',','.')
+        this.detail.recovered = response.data.recovered.value.toLocaleString().replace(',','.')
+        this.detail.deaths = response.data.deaths.value.toLocaleString().replace(',','.')
 
         const d = new Date(response.data.metadata.lastUpdatedAt)
         const dtf = new Intl.DateTimeFormat('en', { year: 'numeric', month: 'long', day: '2-digit', hour: 'numeric', minute: 'numeric', second: 'numeric', hour12: false}) 
@@ -70,10 +70,10 @@ const app = new Vue({
         let arr = []
         for(let i = 0; i < response.data.features.length; i++){
           arr.push({
-            province: response.data.features[i].attributes.Provinsi,
-            confirmed: response.data.features[i].attributes.Kasus_Posi,
-            recovered: response.data.features[i].attributes.Kasus_Semb,
-            deaths: response.data.features[i].attributes.Kasus_Meni
+            province: response.data.features[i].attributes.Provinsi.toLocaleString().replace(',','.'),
+            confirmed: response.data.features[i].attributes.Kasus_Posi.toLocaleString().replace(',','.'),
+            recovered: response.data.features[i].attributes.Kasus_Semb.toLocaleString().replace(',','.'),
+            deaths: response.data.features[i].attributes.Kasus_Meni.toLocaleString().replace(',','.')
           })
         }
         this.listProvince = arr
@@ -84,10 +84,10 @@ const app = new Vue({
 
       const link = "https://covid19.mathdro.id/api";
       axios.get(link).then(response => {
-        _this2.world.confirmed = response.data.confirmed.value;
-        _this2.world.active = response.data.confirmed.value - (response.data.recovered.value+response.data.deaths.value);
-        _this2.world.recovered = response.data.recovered.value;
-        _this2.world.deaths = response.data.deaths.value;
+        _this2.world.confirmed = response.data.confirmed.value.toLocaleString().replace(',','.');
+        _this2.world.active = (response.data.confirmed.value - (response.data.recovered.value+response.data.deaths.value)).toLocaleString().replace(',','.');
+        _this2.world.recovered = response.data.recovered.value.toLocaleString().replace(',','.');
+        _this2.world.deaths = response.data.deaths.value.toLocaleString().replace(',','.');
       }).catch(err => {
         return console.log(err);
       });
@@ -125,7 +125,17 @@ const app = new Vue({
           _loop(i);
         }
 
-        _this3.listCountry = arr;
+        arrFormated = arr.map(item => {
+          return {
+            country: item.country,
+            confirmed : item.confirmed.toLocaleString().replace(',','.'),
+            active : item.active.toLocaleString().replace(',','.'),
+            recovered : item.recovered.toLocaleString().replace(',','.'),
+            deaths : item.deaths.toLocaleString().replace(',','.')
+          }
+        })
+
+        _this3.listCountry = arrFormated;
         _this3.dbListCountry = _this3.listCountry;
 
       }).catch(err => {
@@ -154,10 +164,10 @@ const app = new Vue({
         if (arr.length === 1) {
           if(newVal == 'Indonesia'){
             alert("Ada perubahaan data. Data beralih sumber menjadi John Hopkins University, refresh atau matikan hidupkan kembali app untuk mengembalikan sumber menjadi Badan Nasional Penanggulangan Bencana")
-            this.negara = newVal;
+            this.negara = arr[0].country;
             // this.sumber = 'Badan Nasional Penanggulangan Bencana'
           }else{
-            this.negara = newVal;
+            this.negara = arr[0].country;
             this.detail.confirmed = arr[0].confirmed;
             this.detail.active = arr[0].active;
             this.detail.recovered = arr[0].recovered;
