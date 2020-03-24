@@ -93,37 +93,22 @@ const app = new Vue({
       });
     },
     getListCountry: function getListCountry() {
-      const _this3 = this;
 
-      const link = "https://covid19.mathdro.id/api/confirmed";
+      const link = "https://api.kawalcorona.com/";
       axios.get(link).then(response => {
         const arr = [];
-
-        const _loop = function _loop(i) {
-          if (!arr.find(item => {
-            return item.country === response.data[i].countryRegion;
-          })) {
-            arr.push({
-              country: response.data[i].countryRegion,
-              active: response.data[i].active,
-              confirmed: response.data[i].confirmed,
-              recovered: response.data[i].recovered,
-              deaths: response.data[i].deaths
-            });
-          } else {
-            arr.map(item => {
-              if (item.country === response.data[i].countryRegion) {
-                item.confirmed += response.data[i].confirmed;
-                item.active += response.data[i].active;
-                item.recovered += response.data[i].recovered;
-                item.deaths += response.data[i].deaths;
-              }
-            });
-          }          
-        };
-        for (let i = 0; i < response.data.length; i++) {
-          _loop(i);
+        
+        console.log(response.data);
+        for(let item of response.data){
+          arr.push({
+            country: item.attributes.Country_Region,
+            confirmed : item.attributes.Confirmed.toLocaleString().replace(',','.'),
+            active : item.attributes.Active.toLocaleString().replace(',','.'),
+            recovered : item.attributes.Recovered.toLocaleString().replace(',','.'),
+            deaths : item.attributes.Deaths.toLocaleString().replace(',','.')
+          })
         }
+
 
         arrFormated = arr.map(item => {
           return {
@@ -135,8 +120,8 @@ const app = new Vue({
           }
         })
 
-        _this3.listCountry = arrFormated;
-        _this3.dbListCountry = _this3.listCountry;
+        this.listCountry = arrFormated;
+        this.dbListCountry = this.listCountry;
 
       }).catch(err => {
         return console.log(err);
@@ -144,7 +129,7 @@ const app = new Vue({
     },
     cari: function cari(event) {
       const val = event.target.value;
-      this.sumber = 'John Hopkins University CSSE'
+      this.sumber = 'KawalCovid19'
 
       if (val == '') {
         this.negara = "🌎";
@@ -163,7 +148,7 @@ const app = new Vue({
 
         if (arr.length === 1) {
           if(newVal == 'Indonesia'){
-            alert("Ada perubahaan data. Data beralih sumber menjadi John Hopkins University, refresh atau matikan hidupkan kembali app untuk mengembalikan sumber menjadi Badan Nasional Penanggulangan Bencana")
+            alert("Ada perubahaan data. Data beralih sumber menjadi KawalCovid19, refresh atau matikan hidupkan kembali app untuk mengembalikan sumber menjadi Badan Nasional Penanggulangan Bencana")
             this.negara = arr[0].country;
             // this.sumber = 'Badan Nasional Penanggulangan Bencana'
           }else{
