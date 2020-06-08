@@ -94,21 +94,19 @@ const app = new Vue({
     },
     getListCountry: function getListCountry() {
 
-      const link = "https://api.kawalcorona.com/";
+      const link = "https://api.covid19api.com/summary";
       axios.get(link).then(response => {
         const arr = [];
         
-        console.log(response.data);
         for(let item of response.data){
           arr.push({
-            country: item.attributes.Country_Region,
-            confirmed : item.attributes.Confirmed.toLocaleString().replace(',','.'),
-            active : item.attributes.Active.toLocaleString().replace(',','.'),
-            recovered : item.attributes.Recovered.toLocaleString().replace(',','.'),
-            deaths : item.attributes.Deaths.toLocaleString().replace(',','.')
+            country: item.Countries.Country,
+            confirmed : item.Countries.TotalConfirmed.toLocaleString().replace(',','.'),
+            active : (item.Countries.TotalConfirmed - (item.Countries.TotalRecovered + item.Countries.TotalDeaths)).toLocaleString().replace(',','.'),
+            recovered : item.Countries.TotalRecovered.toLocaleString().replace(',','.'),
+            deaths : item.Countries.TotalDeaths.toLocaleString().replace(',','.')
           })
         }
-
 
         arrFormated = arr.map(item => {
           return {
