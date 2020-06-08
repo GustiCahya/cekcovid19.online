@@ -82,12 +82,13 @@ const app = new Vue({
     worldCase: function worldCase() {
       const _this2 = this;
 
-      const link = "https://covid19.mathdro.id/api";
+      const link = "https://api.covid19api.com/summary";
       axios.get(link).then(response => {
-        _this2.world.confirmed = response.data.confirmed.value.toLocaleString().replace(',','.');
-        _this2.world.active = (response.data.confirmed.value - (response.data.recovered.value+response.data.deaths.value)).toLocaleString().replace(',','.');
-        _this2.world.recovered = response.data.recovered.value.toLocaleString().replace(',','.');
-        _this2.world.deaths = response.data.deaths.value.toLocaleString().replace(',','.');
+        _this2.world.confirmed = response.data.Global.TotalConfirmed.toLocaleString().replace(',','.');
+        _this2.world.active = (response.data.Global.TotalConfirmed - 
+          (response.data.Global.TotalRecovered + response.data.Global.TotalDeaths)).toLocaleString().replace(',','.');
+        _this2.world.recovered = response.data.Global.TotalRecovered.toLocaleString().replace(',','.');
+        _this2.world.deaths = response.data.Global.TotalDeaths.toLocaleString().replace(',','.');
       }).catch(err => {
         return console.log(err);
       });
@@ -146,7 +147,7 @@ const app = new Vue({
 
         if (arr.length === 1) {
           if(newVal == 'Indonesia'){
-            alert("Ada perubahaan data. Data beralih sumber menjadi KawalCovid19, refresh atau matikan hidupkan kembali app untuk mengembalikan sumber menjadi Badan Nasional Penanggulangan Bencana")
+            alert("Ada perubahaan data. Data beralih sumber menjadi Johns Hopkins CSSE, refresh atau matikan hidupkan kembali app untuk mengembalikan sumber menjadi Badan Nasional Penanggulangan Bencana")
             this.negara = arr[0].country;
             // this.sumber = 'Badan Nasional Penanggulangan Bencana'
           }else{
