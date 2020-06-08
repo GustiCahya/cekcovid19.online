@@ -127,7 +127,7 @@ const app = new Vue({
     },
     cari: function cari(event) {
       const val = event.target.value;
-      this.sumber = 'KawalCovid19'
+      this.sumber = 'Johns Hopkins CSSE'
 
       if (val == '') {
         this.negara = "🌎";
