@@ -96,17 +96,17 @@ const app = new Vue({
 
       const link = "https://api.covid19api.com/summary";
       axios.get(link).then(response => {
-        const arr = [];
-        
-        for(let item of response.data){
+        let arr = [];
+        for(let item of response.data.Countries){
           arr.push({
-            country: item.Countries.Country,
-            confirmed : item.Countries.TotalConfirmed.toLocaleString().replace(',','.'),
-            active : (item.Countries.TotalConfirmed - (item.Countries.TotalRecovered + item.Countries.TotalDeaths)).toLocaleString().replace(',','.'),
-            recovered : item.Countries.TotalRecovered.toLocaleString().replace(',','.'),
-            deaths : item.Countries.TotalDeaths.toLocaleString().replace(',','.')
+            country: item.Country,
+            confirmed : item.TotalConfirmed,
+            active : (item.TotalConfirmed - (item.TotalRecovered + item.TotalDeaths)),
+            recovered : item.TotalRecovered,
+            deaths : item.TotalDeaths
           })
         }
+        arr = arr.sort((a,b) => b.confirmed - a.confirmed)
 
         arrFormated = arr.map(item => {
           return {
