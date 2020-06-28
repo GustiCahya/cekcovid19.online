@@ -52,10 +52,6 @@ const app = new Vue({
     ambilDetail: function ambilDetail() {
 
       axios.get(`https://kawalcovid19.harippe.id/api/summary`).then((response)=>{
-        this.detail.confirmed = response.data.confirmed.value.toLocaleString().replace(',','.')
-        this.detail.active = response.data.activeCare.value.toLocaleString().replace(',','.')
-        this.detail.recovered = response.data.recovered.value.toLocaleString().replace(',','.')
-        this.detail.deaths = response.data.deaths.value.toLocaleString().replace(',','.')
 
         const d = new Date(response.data.metadata.lastUpdatedAt)
         const dtf = new Intl.DateTimeFormat('en', { year: 'numeric', month: 'long', day: '2-digit', hour: 'numeric', minute: 'numeric', second: 'numeric', hour12: false}) 
@@ -66,16 +62,24 @@ const app = new Vue({
 
     },
     getListProvince: function getListProvince(){
-      axios.get(`https://services5.arcgis.com/VS6HdKS0VfIhv8Ct/arcgis/rest/services/COVID19_Indonesia_per_Provinsi/FeatureServer/0/query?f=json&where=(Provinsi%20%3C%3E%20%27Indonesia%27)%20AND%20(Kasus_Posi%20%3C%3E%200)&returnGeometry=false&spatialRel=esriSpatialRelIntersects&outFields=*&orderByFields=Kasus_Posi%20desc&outSR=102100&resultOffset=0&resultRecordCount=34&cacheHint=true`).then((response)=>{
+      axios.get(`https://services5.arcgis.com/VS6HdKS0VfIhv8Ct/arcgis/rest/services/COVID19_Indonesia_per_Provinsi/FeatureServer/0/query?f=json&where=(Provinsi%20%3C%3E%20%27Indonesia%27)%20AND%20(Kasus_Posi%20%3C%3E%200)&returnGeometry=false&spatialRel=esriSpatialRelIntersects&outFields=*&orderByFields=Kasus_Posi%20desc&outSR=102100&resultOffset=0&resulZtRecordCount=34&cacheHint=true`).then((response)=>{
         let arr = []
         for(let i = 0; i < response.data.features.length; i++){
           arr.push({
-            province: response.data.features[i].attributes.Provinsi.toLocaleString().replace(',','.'),
-            confirmed: response.data.features[i].attributes.Kasus_Posi.toLocaleString().replace(',','.'),
-            recovered: response.data.features[i].attributes.Kasus_Semb.toLocaleString().replace(',','.'),
-            deaths: response.data.features[i].attributes.Kasus_Meni.toLocaleString().replace(',','.')
+            province: response.data.features[i].attributes.Provinsi,
+            confirmed: response.data.features[i].attributes.Kasus_Posi,
+            recovered: response.data.features[i].attributes.Kasus_Semb,
+            deaths: response.data.features[i].attributes.Kasus_Meni
           })
         }
+
+        this.detail.confirmed = arr.reduce((a, c) => a + c.confirmed ,0)
+
+        this.detail.active = arr.reduce((a, c) => a + c.confirmed ,0) - arr.reduce((a, c) => a + c.recovered ,0) + arr.reduce((a, c) => a + c.deaths ,0)
+
+        this.detail.recovered = arr.reduce((a, c) => a + c.recovered ,0)
+        this.detail.deaths = arr.reduce((a, c) => a + c.deaths ,0)
+        
         this.listProvince = arr
       }).catch((err)=>console.log(err))
     },
@@ -207,8 +211,8 @@ const app = new Vue({
       this.setLoading(false);
       return Promise.reject(error);
     });
-    this.ambilDetail();
     this.getListProvince();
+    this.ambilDetail();
     this.worldCase();
     this.getListCountry();
   },
